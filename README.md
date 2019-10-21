@@ -1,22 +1,24 @@
 # Korean Spell Checker VS Code
 
-![file](https://user-images.githubusercontent.com/14071105/64485534-21a89a80-d25d-11e9-9614-8d52dae3392b.gif)
+에디터에서 선택한 텍스트의 맞춤법 검사 결과를 출력하거나 바로 교정할 수 있는 확장 프로그램 입니다.
 
-에디터에서 선택한 텍스트의 맞춤법 검사 결과를 출력해주는 확장 프로그램입니다.
+## 기능
 
-## 사용법
+### 맞춤법 검사 결과 출력하기
 
-텍스트를 선택한 후 (cmd + shift + p)를 눌러 커맨드 창을 띄운 후 spell이라는
-명령어를 실행하면 됩니다.
+명령어: `Korean Spell Check`
+
+![spell_check mov](https://user-images.githubusercontent.com/14071105/67222552-8401d700-f468-11e9-895e-11360891b82e.gif)
+
+### 맞춤법 바로 교정하기
+
+명령어: `Korean Spell Fix`
+
+![spell_fix mov](https://user-images.githubusercontent.com/14071105/67222553-8401d700-f468-11e9-9143-0304bd9fe83e.gif)
 
 ## 주의
 
 최대 500글자까지 가능합니다.
-
-## Contact
-
-* https://github.com/hannut91
-* https://hannut91.github.io
 
 ## Sources
 
