@@ -18,8 +18,10 @@ export const spellFix = async () => {
   try {
     const { notag_html } = await SpellCheck(text);
 
+    const fixedText = notag_html.replace(/<br>/g, '\n');
+
     editor.edit((editBuilder: TextEditorEdit) => {
-      editBuilder.replace(editor.selection, notag_html);
+      editBuilder.replace(editor.selection, fixedText);
     });
   } catch (err) {
     window.showInformationMessage(

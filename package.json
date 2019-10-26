@@ -2,7 +2,7 @@
   "name": "korean-spell-checker-vs-code",
   "displayName": "Korean Spell Checker VS Code",
   "description": "",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "vscode": "^1.38.0"
   },
