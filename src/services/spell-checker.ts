@@ -6,7 +6,7 @@ const MAX_TEXT_COUNT = 500;
 
 export const SpellCheck = async (text: string): Promise<any> => {
   const { data } = await axios.get(
-    encodeURI(URL + text.slice(0, MAX_TEXT_COUNT))
+    URL + encodeURIComponent(text.slice(0, MAX_TEXT_COUNT))
   );
   return data.message.result;
 };
