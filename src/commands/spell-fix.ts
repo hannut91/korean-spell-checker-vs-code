@@ -1,6 +1,26 @@
-import { window, TextEditorEdit } from 'vscode';
+import {
+  window, TextEditorEdit, Position, Range, Selection, TextLine
+} from 'vscode';
+import { range, curry } from 'lodash';
+import * as _ from 'lodash';
 
 import { SpellCheck } from '../services/spell-checker';
+
+const MAX_TEXT_COUNT = 500;
+
+const getText = curry((textline: TextLine, selection: Selection) => {
+  const { lineNumber } = textline;
+  if (lineNumber === selection.start.line) {
+    return new Range(
+      selection.start, textline.rangeIncludingLineBreak.end)
+  }
+
+  if (lineNumber === selection.end.line) {
+    return new Range(textline.range.start, selection.end);
+  }
+
+  return textline.rangeIncludingLineBreak;
+})
 
 export const spellFix = async () => {
   const editor = window.activeTextEditor;
@@ -9,19 +29,46 @@ export const spellFix = async () => {
     return;
   }
 
-  const text = editor.document.getText(editor.selection);
-  if (!text) {
+  if (!editor.document.getText(editor.selection)) {
     window.showInformationMessage('선택된 텍스트가 없습니다.');
     return;
   }
 
+  let { selection, document } = editor;
+
+  let originText = '';
+
+  if (selection.isSingleLine) {
+    originText = document.getText(selection);
+  } else {
+    range(selection.start.line, selection.end.line + 1)
+      .map(document.lineAt)
+      .map(getText(_, selection))
+      .map(document.getText)
+      .every((text: string, index: number) => {
+        let result = true;
+        if (originText.length + text.length >= MAX_TEXT_COUNT) {
+          text = text.slice(0, MAX_TEXT_COUNT - originText.length);
+          selection = new Selection(
+            selection.start,
+            new Position(selection.start.line + index, text.length),
+          );
+          result = false;
+        }
+
+        originText += text;
+        return result;
+      });
+  }
+
   try {
-    const { notag_html } = await SpellCheck(text);
+    const { notag_html } = await SpellCheck(originText);
 
     const fixedText = notag_html.replace(/<br>/g, '\n');
 
     editor.edit((editBuilder: TextEditorEdit) => {
-      editBuilder.replace(editor.selection, fixedText);
+      editBuilder.replace(selection, fixedText);
+      editor.selection = selection;
     });
   } catch (err) {
     window.showInformationMessage(
