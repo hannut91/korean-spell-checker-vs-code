@@ -2,7 +2,7 @@
   "name": "korean-spell-checker-vs-code",
   "displayName": "Korean Spell Checker VS Code",
   "description": "",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "engines": {
     "vscode": "^1.38.0"
   },
@@ -36,13 +36,15 @@
     "lint": "./node_modules/.bin/tslint -p ."
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.144",
     "@types/node": "^12.11.1",
     "@types/vscode": "^1.38.0",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "axios": "^0.19.0"
+    "axios": "^0.19.0",
+    "lodash": "^4.17.15"
   },
   "publisher": "Yunseok"
 }
