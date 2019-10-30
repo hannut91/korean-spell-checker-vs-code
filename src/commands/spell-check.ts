@@ -3,10 +3,11 @@ import { window, ViewColumn } from 'vscode';
 import { SpellCheck } from '../services/spell-checker';
 
 const STYLE = `<style>
-.red_text { color: red; }
-.green_text { color: green; }
-.blue_text { color: blue; }
-.violet_text { color: purple; }
+.red_text { color: #f44336; }
+.green_text { color: #4caf50; }
+.blue_text { color: #2196f3; }
+.violet_text { color: #9c27b0; }
+body { padding: 16px; font-size: 15px; line-height: 22px;}
 </style>`;
 
 let panel: any;

@@ -12,7 +12,7 @@ const getText = curry((textline: TextLine, selection: Selection) => {
   const { lineNumber } = textline;
   if (lineNumber === selection.start.line) {
     return new Range(
-      selection.start, textline.rangeIncludingLineBreak.end)
+      selection.start, textline.rangeIncludingLineBreak.end);
   }
 
   if (lineNumber === selection.end.line) {
@@ -20,7 +20,7 @@ const getText = curry((textline: TextLine, selection: Selection) => {
   }
 
   return textline.rangeIncludingLineBreak;
-})
+});
 
 export const spellFix = async () => {
   const editor = window.activeTextEditor;
