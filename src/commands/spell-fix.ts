@@ -40,6 +40,13 @@ export const spellFix = async () => {
 
   if (selection.isSingleLine) {
     originText = document.getText(selection);
+    if (originText.length >= MAX_TEXT_COUNT) {
+      originText = originText.slice(0, MAX_TEXT_COUNT);
+      selection = new Selection(
+        selection.start,
+        new Position(selection.start.line, selection.start.character + originText.length)
+      )
+    }
   } else {
     range(selection.start.line, selection.end.line + 1)
       .map(document.lineAt)
