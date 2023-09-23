@@ -4,7 +4,7 @@ import {
 import { range, curry } from 'lodash';
 import * as _ from 'lodash';
 
-import { SpellCheck } from '../services/spell-checker';
+import { fix } from '../services/spell-checker';
 
 const MAX_TEXT_COUNT = 500;
 
@@ -45,7 +45,7 @@ export const spellFix = async () => {
       selection = new Selection(
         selection.start,
         new Position(selection.start.line, selection.start.character + originText.length)
-      )
+      );
     }
   } else {
     range(selection.start.line, selection.end.line + 1)
@@ -69,16 +69,14 @@ export const spellFix = async () => {
   }
 
   try {
-    const { notag_html } = await SpellCheck(originText);
-
-    const fixedText = notag_html.replace(/<br>/g, '\n');
+    const notag_html = await fix(originText);
 
     editor.edit((editBuilder: TextEditorEdit) => {
-      editBuilder.replace(selection, fixedText);
+      editBuilder.replace(selection, notag_html);
       editor.selection = selection;
     });
   } catch (err) {
     window.showInformationMessage(
-      '교정된 텍스트를 불러오는데 실패했습니다. err: ', err);
+      `교정된 텍스트를 불러오는데 실패했습니다. err: ${(err as any).message}`, );
   }
 };

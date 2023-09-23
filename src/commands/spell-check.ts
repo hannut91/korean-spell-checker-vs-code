@@ -3,11 +3,15 @@ import { window, ViewColumn } from 'vscode';
 import { SpellCheck } from '../services/spell-checker';
 
 const STYLE = `<style>
-.red_text { color: #f44336; }
-.green_text { color: #4caf50; }
-.blue_text { color: #2196f3; }
-.violet_text { color: #9c27b0; }
-body { padding: 16px; font-size: 15px; line-height: 22px;}
+body {
+  padding: 16px;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.green_text {
+  color: #4caf50;
+}
 </style>`;
 
 let panel: any;
@@ -26,7 +30,7 @@ export const spellCheck = async () => {
   }
 
   try {
-    const { html } = await SpellCheck(text);
+    const html = await SpellCheck(text);
 
     if (!panel) {
       panel = window.createWebviewPanel(
@@ -38,9 +42,9 @@ export const spellCheck = async () => {
       panel.onDidDispose(() => panel = undefined);
     }
 
-    panel.webview.html = STYLE + html;
+    panel.webview.html = STYLE + html.replace(/\r/g, '<br/>');
   } catch (err) {
     window.showInformationMessage(
-      '교정된 텍스트를 불러오는데 실패했습니다. err: ', err);
+      `교정된 텍스트를 불러오는데 실패했습니다. err: ${(err as any).message}`);
   }
 };

@@ -22,4 +22,4 @@
 
 ## Sources
 
-* https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EB%84%A4%EC%9D%B4%EB%B2%84+%EB%A7%9E%EC%B6%A4%EB%B2%95+%EA%B2%80%EC%82%AC%EA%B8%B0
+* 한국어 맞춤법/문법 검사기 - 부산대학교 - http://speller.cs.pusan.ac.kr/
