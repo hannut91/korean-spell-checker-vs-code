@@ -22,6 +22,7 @@ interface Correction {
 
 export const check = async (text: string): Promise<Response> => {
   const input = text.slice(0, MAX_TEXT_COUNT).replace(/\n/g, '\r');
+  // @ts-ignore
   const response = await fetch(URL, {
     method: 'post',
     body: `text1=${encodeURIComponent(input)}`,
