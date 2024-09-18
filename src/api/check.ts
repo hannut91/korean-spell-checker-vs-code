@@ -1,8 +1,6 @@
-import axios from 'axios';
-
 const MAX_TEXT_COUNT = 500;
 
-const URL = 'http://164.125.7.61/speller/results';
+const URL = 'https://nara-speller.co.kr/speller/results';
 
 const regex = new RegExp('data = (.+);');
 
@@ -24,14 +22,15 @@ interface Correction {
 
 export const check = async (text: string): Promise<Response> => {
   const input = text.slice(0, MAX_TEXT_COUNT).replace(/\n/g, '\r');
-  const { data } = await axios.request({
+  const response = await fetch(URL, {
     method: 'post',
-    url: URL,
-    data: `text1=${encodeURIComponent(input)}`,
+    body: `text1=${encodeURIComponent(input)}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-  });
+  })
+
+  const data = await response.text();
 
   try {
     const [, jsonString] = data.match(regex);
